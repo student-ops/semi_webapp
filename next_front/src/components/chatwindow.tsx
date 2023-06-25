@@ -1,6 +1,6 @@
 export default function Head() {
     // ヘッダーデザインお願い
-    let tweet  :string = "hello from maemura semi"
+    let tweet  :string = "hello from component"
     return(
        <>
         <header className="text-gray-600 body-font h-30 bg-indigo-500">
