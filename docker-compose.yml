@@ -12,10 +12,12 @@ services:
       - SITE_DATA_PATH=${SITE_DATA_PATH}
       - INDEX_PATH=${INDEX_PATH}
       - REDIS_PATH=redis:6379
+    ports:
+      - "4000:4000" 
 
-  # frontend_project:
-  #   build:
-  #     context: ./frontend_type_project
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "80:80"
+  frontend_project:
+    build:
+      context: ./next_app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
