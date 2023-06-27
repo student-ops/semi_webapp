@@ -12,6 +12,7 @@ services:
       - SITE_DATA_PATH=${SITE_DATA_PATH}
       - INDEX_PATH=${INDEX_PATH}
       - REDIS_PATH=redis:6379
+<<<<<<< HEAD
 
   # frontend_project:
   #   build:
@@ -19,3 +20,14 @@ services:
   #     dockerfile: Dockerfile
   #   ports:
   #     - "80:80"
+=======
+    ports:
+      - "4000:4000" 
+
+  frontend_project:
+    build:
+      context: ./next_app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+>>>>>>> 1c9609db9c8ce1ad8c235e3ec4b0882e3e66b18a
