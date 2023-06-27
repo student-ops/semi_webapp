@@ -21,4 +21,4 @@ curl --no-buffer -X POST -H "Content-Type: application/json" -d '{
 
 
 ```
-codespace＆local動作確認///////
+codespace＆local動作確認/
