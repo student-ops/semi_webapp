@@ -13,16 +13,4 @@ https://github.com/student-ops/semi_webapp_backend
 
 ヘッダーデザイン
 
-
-## curls
-
-```
-
-curl --no-buffer -X POST -H "Content-Type: application/json" -d '{
-  "prefecture": "愛媛県",
-  "question": "観光スポットはありますか？"
-}' http://localhost:4000/llama_chat
-
-
-```
 codespace＆local動作確認///
