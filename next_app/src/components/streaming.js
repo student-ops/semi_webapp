@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Remark from './reamrk';
 
 function StreamDisplay({ url, botName, question }) {
   const [data, setData] = useState('');
@@ -23,7 +24,7 @@ function StreamDisplay({ url, botName, question }) {
         if (result.done) return;
       
         const chunk = decoder.decode(result.value);
-        setData((oldResponse) => oldResponse + chunk);
+        setData((oldResponse) => oldResponse+ chunk);
       
         reader.read().then(processStream);
       }
@@ -37,8 +38,11 @@ function StreamDisplay({ url, botName, question }) {
 
 
   return (
-    <pre>{data}</pre>
+    <>
+    <Remark data={data}/>
+    </>
   );
+
 }
 
 export default StreamDisplay;
