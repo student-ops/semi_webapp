@@ -1,4 +1,3 @@
-// components/StreamDisplay.js
 import { useEffect, useState } from 'react';
 
 function StreamDisplay({ url, botName, question }) {
@@ -20,36 +19,22 @@ function StreamDisplay({ url, botName, question }) {
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
 
-      let buffer = '';
+      const processStream = (result) => {
+        if (result.done) return;
+      
+        const chunk = decoder.decode(result.value);
+        setData((oldResponse) => oldResponse + chunk);
+      
+        reader.read().then(processStream);
+      }
 
-      reader.read().then(function processText({ done, value }) {
-        if (done) {
-          return;
-        }
+      reader.read().then(processStream);
+    };     
 
-        // Add the new data to the buffer
-        buffer += decoder.decode(value);
-
-        // Check if the buffer contains a complete message
-        const messageEndIndex = buffer.indexOf('\n\n');
-        if (messageEndIndex !== -1) {
-          // Extract the complete message from the buffer
-          const completeMessage = buffer.slice(0, messageEndIndex);
-
-          // Remove "data: " from the message and add it to the existing data
-          const cleanMessage = completeMessage.replace(/^data: /, '');
-          setData((prevData) => prevData + cleanMessage);
-
-          // Remove the complete message from the buffer
-          buffer = buffer.slice(messageEndIndex + 2);
-        }
-
-        return reader.read().then(processText);
-      });
-    };
 
     fetchData();
-  }, [url, botName, question]);
+  }, [url, botName, question]);  // 依存配列を追加
+
 
   return (
     <pre>{data}</pre>
