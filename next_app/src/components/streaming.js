@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Remark from './reamrk';
+import Remark from './remark';
 
 function StreamDisplay({ url, botName, question }) {
   const [data, setData] = useState('');
