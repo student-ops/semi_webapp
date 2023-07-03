@@ -3,17 +3,18 @@ import React from 'react';
 const Footer: React.FC = () => {
   return (
     <>
-      <ul>
-      <li><a href="./"><i className="fa-solid fa-house footer-icon"></i><br>
-          <p>ホーム</p>
-        </a></li>
-      <li><a href="./"><i className="fa-solid fa-comment-dots footer-icon"></i><br>
-          <p>チャット</p>
-        </a></li>
-      <li><a href="./"><i className="fa-solid fa-play footer-icon"></i><br>
-          <p>資料</p>
-        </a></li>
-    </ul>
+      <footer className='absolute bottom-0 bg-slate-500 w-full'>
+        <div className="w-full">
+          <div>
+            
+            <div className="flex w-full">
+              <div className="pr-10 pl-10 text-slate-300">HOME</div>
+              <div className="pr-10 text-slate-300">CHAT</div>
+              <div className="pr-10 text-slate-300">CONTACT</div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 };
