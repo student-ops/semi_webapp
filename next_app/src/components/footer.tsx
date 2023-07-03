@@ -3,9 +3,17 @@ import React from 'react';
 const Footer: React.FC = () => {
   return (
     <>
-        <footer className="bg-gray-200">
-            <p className="p-2 text-center text-xs">Copyright © 2019 Webty, inc. All Rights Reserved.</p>
-        </footer>
+      <ul>
+      <li><a href="./"><i className="fa-solid fa-house footer-icon"></i><br>
+          <p>ホーム</p>
+        </a></li>
+      <li><a href="./"><i className="fa-solid fa-comment-dots footer-icon"></i><br>
+          <p>チャット</p>
+        </a></li>
+      <li><a href="./"><i className="fa-solid fa-play footer-icon"></i><br>
+          <p>資料</p>
+        </a></li>
+    </ul>
     </>
   );
 };
