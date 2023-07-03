@@ -5,17 +5,20 @@ const StreamingJsonComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch('http://localhost:8080/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "prefecture": "愛媛県",
-          "question": "観光スポットはありますか？"
-        })
-      });
+      // const res = await fetch('http://localhost:8080/chat', {
+      //   method: 'POST',      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({
+      //     "prefecture": "愛媛県",
+      //     "question": "観光スポットはありますか？"
+      //   })
+      // });
 
+      const res =await fetch('curl --no-buffer http://localhost:3000/api/streaming',{
+        method:'GET'
+
+      })
       const reader = res.body.getReader();
       const decoder = new TextDecoder('utf-8');
 

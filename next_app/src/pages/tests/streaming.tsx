@@ -1,4 +1,4 @@
-import StreamDisplay from '../components/streaming';
+import StreamDisplay from '../../components/streaming';
 import { useEffect, useState } from 'react';
 
 export default function Home() {

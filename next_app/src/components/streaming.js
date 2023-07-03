@@ -3,6 +3,7 @@ import Remark from './remark';
 
 function StreamDisplay({ url, botName, question }) {
   const [data, setData] = useState('');
+  url = 'http://localhost:3000/api/mock/streaming'
 
   useEffect(() => {
     const fetchData = async () => {
