@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import Remark from './remark';
+import { Chatlog, RemarkType } from '@/lib/types';
 
-function StreamDisplay({ url, botName, question }) {
+function Streaming({chatlog}:{chatlog:Chatlog}) {
   const [data, setData] = useState('');
-  url = 'http://localhost:3000/api/mock/streaming'
+  let url = '/api/mock/streaming' //change 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,15 +14,15 @@ function StreamDisplay({ url, botName, question }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          bot_name: botName,
-          question: question,
+          bot_name: "faculty",
+          question: chatlog.message,
         }),
       });
 
-      const reader = response.body.getReader();
+      const reader = response.body!.getReader();
       const decoder = new TextDecoder('utf-8');
 
-      const processStream = (result) => {
+      const processStream = (result:any) => {
         if (result.done) return;
       
         const chunk = decoder.decode(result.value);
@@ -35,15 +36,20 @@ function StreamDisplay({ url, botName, question }) {
 
 
     fetchData();
-  }, [url, botName, question]);  // 依存配列を追加
+  }, [chatlog]);  // 依存配列を追加
+  const remark: RemarkType = {
+    message: data,
+    user :0
+  };
+
 
 
   return (
     <>
-    <Remark data={data}/>
+      <Remark remark={remark}/>
     </>
   );
 
 }
 
-export default StreamDisplay;
+export default Streaming;
