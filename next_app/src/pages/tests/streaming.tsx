@@ -2,17 +2,16 @@ import StreamDisplay from '../../components/streaming';
 import { useEffect, useState } from 'react';
 import { Chatlog , RemarkType } from '@/lib/types';
 import Remark from '@/components/remark';
+import {PromptSuggestions} from '@/lib/suggestions'
 
 export default function Home() {
   let initialchatLog: Chatlog[] = [
     {
       message : "どのような学部ですか",
       response:"ITについて学びます",
-      id : 1234
     },
     {
       message : "もう少し具体的に教えて",
-      id : 1234,
     },
     // 他のChatlog要素...
   ];
@@ -37,37 +36,54 @@ export default function Home() {
       {
         loading && <p>loading...</p>
       }
-      <form
-            onSubmit={(e)=>{
-                e.preventDefault();
-                setMessage(message)
-                const chat = {
-                    message: message,
-                    id: 1234
-                }
-                setChat(prevChat => [...prevChat, chat]);
-                setMessage("")
-            }}>
-                <div className="editor rounded-lg  flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
-                    <input
-                        className="title rounded bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
-                        spellCheck="false"
-                        placeholder="Send a message"
-                        type="text"
-                        value={message}
-                        onChange={(e) => {
-                            // console.log(e.currentTarget.value)
-                            setMessage(e.currentTarget.value)
-                        }}
-                    />
-                    <div className="buttons flex mt-3">
-                        <button type="submit" className={
-                          loading ? "bg-red-200" :
-                          "bg-green-400"}>
-                            Submit
-                        </button>
-                    </div>
-                </div>
+      <div id="Suggestions">
+        <p>
+          Suggestions
+        </p>
+        {
+          PromptSuggestions.map((suggestion, index) =>
+            <p key={index}
+            onClick={(e) => {
+              const target = e.currentTarget as HTMLParagraphElement;
+              setMessage(target.innerText);
+            }}>{suggestion}</p>
+          )
+        }
+      </div>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        if (loading) {
+            return;
+        }
+
+        const chat = {
+            message: message,
+            id: 1234
+        }
+
+        setChat(prevChat => [...prevChat, chat]);
+        setMessage("")
+      }}>
+        <div className="editor rounded-lg  flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+            <input
+                className="title rounded bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
+                spellCheck="false"
+                placeholder="Send a message"
+                type="text"
+                value={message}
+                onChange={(e) => {
+                    // console.log(e.currentTarget.value)
+                    setMessage(e.currentTarget.value)
+                }}
+            />
+            <div className="buttons flex mt-3">
+                <button type="submit" className={
+                  loading ? "bg-red-200" :
+                  "bg-green-400"}>
+                    Submit
+                </button>
+            </div>
+        </div>
       </form>
     </div>
   );

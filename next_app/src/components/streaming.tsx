@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Remark from './remark';
 import { Chatlog, RemarkType } from '@/lib/types';
 
-function Streaming({ chatlog, setLoading }: { chatlog: Chatlog; setLoading: (loading: boolean) => void }) {
+function StreamResponse({ chatlog, setLoading }: { chatlog: Chatlog; setLoading: (loading: boolean) => void }) {
 
   const [data, setData] = useState('');
   let url = '/api/mock/streaming' //change 
@@ -53,7 +53,6 @@ function Streaming({ chatlog, setLoading }: { chatlog: Chatlog; setLoading: (loa
   };
 
 
-
   return (
     <>
       <Remark remark={remark}/>
@@ -62,4 +61,4 @@ function Streaming({ chatlog, setLoading }: { chatlog: Chatlog; setLoading: (loa
 
 }
 
-export default Streaming;
+export default StreamResponse;
