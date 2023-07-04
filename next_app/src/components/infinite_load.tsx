@@ -52,7 +52,7 @@ const PromptSuggestions = [
 ];
 
 const SuggestionsComponent = () => {
-  const [list, setList] = useState([...PromptSuggestions.slice(0, 10)]);
+  const [list, setList] = useState([...PromptSuggestions.slice(0, 12)]);
   const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const SuggestionsComponent = () => {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="py-8">
       {list.map((suggestion, index) =>
         <p key={index} className="mb-2">{suggestion}</p>
       )}
