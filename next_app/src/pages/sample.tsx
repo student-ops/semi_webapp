@@ -1,16 +1,11 @@
 import { useState } from "react"
-
-type Chatlog = {
-    message:string,
-    user:number, //0 =ai ,1 = user
-    id?:number,
-}
+import { Chatlog } from "@/lib/types"
 
 export default function Chat(){
     let initial_chatlog :Chatlog[]= [
         {
             message:"type question and send it !!",
-            user : 0,
+            response:""
         },
     ]
     const [] = useState(initial_chatlog)
