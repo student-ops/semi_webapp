@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { PromptSuggestions } from "@/lib/suggestions";
 
-const PromptSuggestions = [
-    "どのような履修科目がありますか",
-    "主にどのような業界に就職しますか",
-    "生徒の出身の割合は?",
-    "a",
-    "b",
-    "生徒の出身の割合は?",
-    "d",
-    "e",
-    "f",
-    "g"
-]
 
 export default function Suggestion() {
     const [suggestions, setSuggestions] = useState<string[][]>([]);

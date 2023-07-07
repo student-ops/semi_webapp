@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Chatlog , RemarkType } from '@/lib/types';
 import Remark from '@/components/remark';
 import {PromptSuggestions} from '@/lib/suggestions'
+import Suggestion from '@/components/chat_suggestion';
 
 export default function Home() {
   let initialchatLog: Chatlog[] = [
@@ -50,6 +51,7 @@ export default function Home() {
           )
         }
       </div>
+      <Suggestion/>
       <form onSubmit={(e) => {
         e.preventDefault();
         if (loading) {
