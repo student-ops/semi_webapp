@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { PromptSuggestions } from "@/lib/suggestions";
+import { useSwipeable } from 'react-swipeable';
 
 
-export default function Suggestion() {
+const Suggestion: React.FC<{ setMessage: (message: string) => void }> = ({ setMessage }) => {
     const [suggestions, setSuggestions] = useState<string[][]>([]);
     const [page,setPage] = useState(0);
 
+    const handlers = useSwipeable({
+        onSwipedLeft: () => nextPage(),
+        onSwipedRight: () => prevPage(),
+        trackMouse: true
+   });
+    
     useEffect(() => {
         let chunks: string[][] = [];
         for (let i = 0; i < PromptSuggestions.length; i += 3) {
@@ -27,9 +34,9 @@ export default function Suggestion() {
     }
 
     return(
-        <div className="w-full flex justify-center ">
+        <div className="w-full flex justify-center " {...handlers}>
             
-            <div className="w-1/2 flex items-center justify-center">
+            <div className="flex items-center justify-center">
                 { page > 0 && <p onClick={prevPage}>&lt;</p>}
                 <div className="flex-col">
                     <div className="flex justify-center">
@@ -39,11 +46,19 @@ export default function Suggestion() {
                     </div>
                     
                     {suggestions[page]?.map((suggestion, index) =>
-                    <p key={index} className="mb-2">{suggestion}</p>
+                    <p onClick={(e) => {
+                        const target = e.currentTarget as HTMLParagraphElement;
+                            setMessage(target.innerText);
+                        }
+                        }
+                        key={index} className="mb-2">{suggestion}</p>
                 )}
                 </div>
                 {page < suggestions.length -1 &&<p onClick={nextPage}>&gt;</p>}
             </div>
         </div>
     )
+    
 }
+
+export default Suggestion

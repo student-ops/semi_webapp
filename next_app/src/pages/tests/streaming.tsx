@@ -17,7 +17,7 @@ export default function Home() {
     // 他のChatlog要素...
   ];
 
-  const [chatLog, setChat] = useState(initialchatLog);
+  const [chatLog, setChatLog] = useState(initialchatLog);
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   return (
@@ -41,7 +41,7 @@ export default function Home() {
         <p>
           Suggestions
         </p>
-        {
+        {/* {
           PromptSuggestions.map((suggestion, index) =>
             <p key={index}
             onClick={(e) => {
@@ -49,9 +49,9 @@ export default function Home() {
               setMessage(target.innerText);
             }}>{suggestion}</p>
           )
-        }
+        } */}
       </div>
-      <Suggestion/>
+      <Suggestion setMessage = {setMessage}/>
       <form onSubmit={(e) => {
         e.preventDefault();
         if (loading) {
@@ -63,7 +63,7 @@ export default function Home() {
             id: 1234
         }
 
-        setChat(prevChat => [...prevChat, chat]);
+        setChatLog(prevChat => [...prevChat, chat]);
         setMessage("")
       }}>
         <div className="editor rounded-lg  flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
