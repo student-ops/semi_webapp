@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import Remark from './remark';
 import { Chatlog, RemarkType } from '@/lib/types';
 
-function StreamResponse({ chatlog, setLoading }: { chatlog: Chatlog; setLoading: (loading: boolean) => void }) {
+function StreamResponse({ chat, setLoading,setChat }: { chat: Chatlog; setLoading: (loading: boolean) => void ; setChat: (chatlog: Chatlog) => void}) {
 
   const [data, setData] = useState('');
-  let url = '/api/mock/streaming' //change 
+  // let url = '/api/mock/streaming' //change 
+  const url = "http://localhost:4000/llama_chat"
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,13 +19,14 @@ function StreamResponse({ chatlog, setLoading }: { chatlog: Chatlog; setLoading:
         },
         body: JSON.stringify({
           bot_name: 'faculty',
-          question: chatlog.message,
+          question: chat.message,
         }),
       });
   
       const readableStream = response.body;
       const reader = readableStream!.getReader();
       const decoder = new TextDecoder('utf-8');
+      let isFirstChunk = true;
   
       const processStream = async () => {
         while (true) {
@@ -32,12 +34,27 @@ function StreamResponse({ chatlog, setLoading }: { chatlog: Chatlog; setLoading:
           
           if (done) {
             setLoading(false);
-            console.log('Streaming ended.');
             break;
           }
   
           const chunk = decoder.decode(value);
-          setData((oldResponse) => oldResponse + chunk);
+          let uuid = ""
+          //devide to fuction unit
+          if (isFirstChunk && chunk.startsWith('id:')) {
+            const [id, ...rest] = chunk.split('\n');
+            const idValue = id.split(':')[1];
+            const restJoined = rest.join('\n');
+            uuid = idValue;
+            isFirstChunk = false;
+          } else {
+            setData(oldResponse => oldResponse + chunk);
+          }
+          let chatlog = {
+            message : chat.message,
+            response : data,
+            id: uuid,
+          }
+          setChat(chatlog)
         }
       };
   

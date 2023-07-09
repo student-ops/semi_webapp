@@ -1,6 +1,6 @@
 export type Chatlog = {
     message:string,
-    id?:number,
+    id?:string,
     response?:string
     loading?:boolean,
 }

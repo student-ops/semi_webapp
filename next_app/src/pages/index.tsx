@@ -1,4 +1,4 @@
-import StreamDisplay from '@/components/streaming';
+import StreamResponse from '@/components/streaming';
 import { useEffect, useState } from 'react';
 import { Chatlog , RemarkType } from '@/lib/types';
 import Remark from '@/components/remark';
@@ -20,6 +20,10 @@ export default function Home() {
   const [chatLog, setChatLog] = useState(initialchatLog);
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
+  const [chat, setChat] = useState<Chatlog>();
+  useEffect(() => {
+    console.log(chat);
+  }, [chat]); 
   return (
     <div>
       <h1>Sample</h1>
@@ -27,8 +31,8 @@ export default function Home() {
       {chatLog.map((log, index) => 
         <>
           <Remark key={index} remark={{message: log.message, user: 1}}/>
-          {log.response == null 
-            ?<StreamDisplay key={index} chatlog={log} setLoading={setLoading} />
+          {log.response == null || ""
+            ?<StreamResponse key={index} chat={log} setLoading={setLoading} setChat={setChat} />
             : <Remark key={`resp-${index}`} remark={{user: 0, message: log.response}}/>
           }
           
@@ -41,15 +45,6 @@ export default function Home() {
         <p>
           Suggestions
         </p>
-        {/* {
-          PromptSuggestions.map((suggestion, index) =>
-            <p key={index}
-            onClick={(e) => {
-              const target = e.currentTarget as HTMLParagraphElement;
-              setMessage(target.innerText);
-            }}>{suggestion}</p>
-          )
-        } */}
       </div>
       <Suggestion setMessage = {setMessage}/>
       <form onSubmit={(e) => {
@@ -60,7 +55,6 @@ export default function Home() {
 
         const chat = {
             message: message,
-            id: 1234
         }
 
         setChatLog(prevChat => [...prevChat, chat]);
