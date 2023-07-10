@@ -3,6 +3,7 @@ export type Chatlog = {
     id:string,
     response?:string
     loading?:boolean,
+    vafify?:Verifycation
 }
 
 export type RemarkType = {

@@ -24,6 +24,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [veriefycations,setVeriefycations] = useState<Verifycation[]>([])
   const [chat, setChat] = useState<Chatlog>();
+  
   useEffect(() => {
     if (chat) { // Check if 'chat' is not undefined
       console.log("index chat")
@@ -49,10 +50,9 @@ export default function Home() {
         <>
           <Remark key={index} remark={{message: log.message, user: 1}}/>
           {log.response == null || ""
-            ?<StreamResponse key={`resp-${index}`} chat={log} setLoading={setLoading} setChat={setChat} />
+            ? <StreamResponse key={`resp-${index}`} chat={log} setLoading={setLoading} setChat={setChat} />
             : <Remark key={`resp-${index}`} remark={{user: 0, message: log.response}}/>
           }
-          
         </>
       )}
       {
