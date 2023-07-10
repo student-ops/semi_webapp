@@ -7,10 +7,10 @@ const Test: React.FC = () => {
       <p>Component</p>
       <div>
       <a href="">
-      <Image
+      <Image className=''
       src="/profile.png"
-      width={500}
-      height={500}
+      width={50}
+      height={50}
       alt="a"
       />
       </a>

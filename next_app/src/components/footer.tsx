@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="w-full">
           <div>
             <div className="flex text-center w-full">
-              <div className="pr-10 pl-10 text-slate-300 flex-1">
+              <div className="text-slate-300 flex-1">
                 <a href="footer_home.png">
                 <Image className=''
                 src="/footer_home.png"
@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
                 />
                 </a>
               </div>
-              <div className="pr-10 text-slate-300 flex-1">
+              <div className="text-slate-300 flex-1">
                 <a href="footer_chat.png">
                 <Image className=''
                 src="/footer_chat.png"
@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
                 />
                 </a>
               </div>
-              <div className="pr-10 text-slate-300 flex-1">
+              <div className="text-slate-300 flex-1">
               <a href="footer_context.png">
                 <Image className=''
                 src="/footer_context.png"
