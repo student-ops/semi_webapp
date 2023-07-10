@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Remark from './remark';
 import { Chatlog, RemarkType } from '@/lib/types';
 
-function StreamResponse({ chat, setLoading,setChat }: { chat: Chatlog; setLoading: (loading: boolean) => void ; setChat: (chatlog: Chatlog) => void}) {
-
-  const [data, setData] = useState('');
-  // let url = '/api/mock/streaming' //change 
-  const url = "http://localhost:4000/llama_chat"
+function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoading: (loading: boolean) => void; setChat: (chatlog: Chatlog) => void }) {
+  const dataRef = useRef('');
+  const [_, setRender] = useState(0); // we only use this state to trigger re-renders
+  let url = '/api/mock/streaming'
+  let uuid = ""
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      
+
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -22,60 +22,55 @@ function StreamResponse({ chat, setLoading,setChat }: { chat: Chatlog; setLoadin
           question: chat.message,
         }),
       });
-  
+
       const readableStream = response.body;
       const reader = readableStream!.getReader();
       const decoder = new TextDecoder('utf-8');
       let isFirstChunk = true;
-  
+
       const processStream = async () => {
         while (true) {
           const { done, value } = await reader.read();
-          
+
           if (done) {
             setLoading(false);
+            let newchat = {
+              message: chat.message,
+              response: dataRef.current,
+              id: uuid,
+            }
+            setChat(newchat);
             break;
           }
-  
+
           const chunk = decoder.decode(value);
-          let uuid = ""
-          //devide to fuction unit
           if (isFirstChunk && chunk.startsWith('id:')) {
             const [id, ...rest] = chunk.split('\n');
             const idValue = id.split(':')[1];
-            const restJoined = rest.join('\n');
             uuid = idValue;
             isFirstChunk = false;
           } else {
-            setData(oldResponse => oldResponse + chunk);
+            dataRef.current += chunk;
+            setRender(prevState => prevState + 1); // trigger a re-render
           }
-          let chatlog = {
-            message : chat.message,
-            response : data,
-            id: uuid,
-          }
-          setChat(chatlog)
         }
       };
-  
+
       processStream();
     };
-  
+
     fetchData();
   }, []);
-
   const remark: RemarkType = {
-    message: data,
+    message: dataRef.current, // use the current value of dataRef
     user :0
   };
-
 
   return (
     <>
       <Remark remark={remark}/>
     </>
   );
-
 }
 
 export default StreamResponse;
