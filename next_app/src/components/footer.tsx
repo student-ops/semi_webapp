@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="w-full">
           <div>
             <div className="flex text-center w-full">
-              <div className="flex justify-center text-slate-300 flex-1">
+              <div className="pr-10 pl-10 flex justify-center text-slate-300 flex-1">
                 <Image className=''
                 src="/footer_home.png"
                 width={50}
@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
                 alt="home"
                 />
               </div>
-              <div className="text-slate-300 flex-1">
+              <div className="justify-center text-slate-300 flex-1">
                 <Image className=''
                 src="/footer_chat.png"
                 width={50}
@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
                 alt="chat"
                 />
               </div>
-              <div className="text-slate-300 flex-1">
+              <div className="justify-center text-slate-300 flex-1">
                 <Image className=''
                 src="/footer_context.png"
                 width={50}
