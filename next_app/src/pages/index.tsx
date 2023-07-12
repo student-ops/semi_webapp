@@ -18,7 +18,6 @@ export default function Home() {
       message : "もう少し具体的に教えて",
       id:"2",
     },
-    // 他のChatlog要素...
   ];
 
   const [chatLog, setChatLog] = useState<Chatlog[]>(initialchatLog);
@@ -40,10 +39,10 @@ export default function Home() {
     }
   }, [chat]); 
 
-  useEffect(() => {
-    console.log("update chatLog")
-    console.log(chatLog);
-  }, [chatLog]); 
+  // useEffect(() => {
+  //   console.log("update chatLog")
+  //   console.log(chatLog);
+  // }, [chatLog]); 
 
   const handleVerificationClick = async (id: string,query:string) => {
     console.log("Verification clicked for id:", id);
@@ -141,17 +140,27 @@ export default function Home() {
         }
         {
           log.verification === undefined 
-          ?<p onClick={() => handleVerificationClick(log.id,log.message)}>検証する</p>
-          : log.verification.nodes?.map((node, i) => (
-              <React.Fragment key={i}>
+          ? <p onClick={() => handleVerificationClick(log.id,log.message)}>検証する</p>
+          : (
+            <>
+              {log.verification?.correctness && 
                 <p>
-                  Node: {node}
+                  Correctness Ratio: 
+                  {`${log.verification.correctness.filter(c => c === 'YES').length} / ${log.verification.correctness.length}`}
                 </p>
-                <p>
-                  Correctness: {log.verification!.correctness ? log.verification!.correctness[i] : "Not available"}
-                </p>
-              </React.Fragment>
-            ))
+              }
+              {log.verification.nodes?.map((node, i) => (
+                <React.Fragment key={i}>
+                  <div className={log.verification!.correctness![i] === 'YES'? "bg-green-300":"bg-red-300"}>
+                    <p>
+                      Correctness: {log.verification!.correctness ? log.verification!.correctness[i] : "Not available"}
+                    </p>
+                    <p>{node}</p>
+                  </div>
+                </React.Fragment>
+              ))}
+            </>
+          )
         }
       </>
     )}
