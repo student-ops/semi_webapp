@@ -2,10 +2,8 @@ import StreamResponse from '@/components/streaming';
 import { useEffect, useState } from 'react';
 import { Chatlog, Verification , RemarkType } from '@/lib/types';
 import Remark from '@/components/remark';
-import {PromptSuggestions} from '@/lib/suggestions'
 import React from 'react';
 import Suggestion from '@/components/chat_suggestion';
-import { verify } from 'crypto';
 
 export default function Home() {
   const backend_url = "http://localhost:4000"
