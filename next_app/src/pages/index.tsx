@@ -1,11 +1,13 @@
 import StreamResponse from '@/components/streaming';
 import { useEffect, useState } from 'react';
-import { Chatlog,Verifycation , RemarkType } from '@/lib/types';
+import { Chatlog, Verification , RemarkType } from '@/lib/types';
 import Remark from '@/components/remark';
 import {PromptSuggestions} from '@/lib/suggestions'
+import React from 'react';
 import Suggestion from '@/components/chat_suggestion';
 
 export default function Home() {
+  const backend_url = "http://localhost:4000"
   let initialchatLog: Chatlog[] = [
     {
       message : "どのような学部ですか",
@@ -22,7 +24,7 @@ export default function Home() {
   const [chatLog, setChatLog] = useState<Chatlog[]>(initialchatLog);
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
-  const [veriefycations,setVeriefycations] = useState<Verifycation[]>([])
+  // const [veriefycations,setVeriefycations] = useState<Verification>()
   const [chat, setChat] = useState<Chatlog>();
   
   useEffect(() => {
@@ -42,59 +44,154 @@ export default function Home() {
     console.log("update chatLog")
     console.log(chatLog);
   }, [chatLog]); 
+
+  const handleVerificationClick = async (id: string,query:string) => {
+    console.log("Verification clicked for id:", id);
+    // Fetch data and handle response
+    const correctness = await GetCorrectness(id,query);
+    const source_nodes = await FetchSourcenodes(id);
+
+    let newChatLog = [...chatLog];
+    let chatLogEntry = newChatLog.find((entry) => entry.id === id);
+
+    // If chat log entry exists, update it with fetched data
+    if (chatLogEntry) {
+      chatLogEntry.verification! = {
+        correctness: correctness,
+        nodes: source_nodes,
+      }
+      setChatLog(newChatLog);
+    } else {
+      console.error("Chat log entry not found for id:", id);
+    }
+  };
+  const FetchSourcenodes = async (id: string) => {
+    try {
+      const response = await fetch(backend_url +'/chat_source_nodes', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            //must change id
+              "id": "8da4d957-d9e4-48f1-a2ff-ad717314f43a",
+          }),
+      });
+
+      // レスポンスをチェックします。
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // データをパースします。
+      const data = await response.json();
+
+      // データをリターンします。
+      return data.source_nodes;
+  } catch (error) {
+    const err = error as Error;
+    console.error('Error:', err);
+    return { error: err.message };
+}
+
+  } 
+
+  const GetCorrectness = async (id: string,queyr:string) => {
+    try {
+        const response = await fetch(backend_url+'/llama_evaluate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+            //must change id
+                "id": "8da4d957-d9e4-48f1-a2ff-ad717314f43a",
+                "query":"どのような人材を目指していますか 日本語で回答して"
+            }),
+        });
+
+        // レスポンスをチェックします。
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // データをパースします。
+        const data = await response.json();
+
+        // データをリターンします。
+        return data.eval_result;
+    } catch (error) {
+      const err = error as Error;
+      console.error('Error:', err);
+      return { error: err.message };
+  }
+
+};
+
   return (
     <div>
       <h1>Sample</h1>
       <h1>Streaming Data Display</h1>
-      {chatLog.map((log, index) => 
-        <>
-          <Remark key={index} remark={{message: log.message, user: 1}}/>
-          {log.response == null || ""
-            ? <StreamResponse key={`resp-${index}`} chat={log} setLoading={setLoading} setChat={setChat} />
-            : <Remark key={`resp-${index}`} remark={{user: 0, message: log.response}}/>
-          }
-        </>
-      )}
-      {
-        loading && <p>loading...</p>
+    {chatLog.map((log, index) => 
+      <>
+        <Remark key={index} remark={{message: log.message, user: 1}}/>
+        {log.response === undefined 
+          ? <StreamResponse key={`resp-${index}`} chat={log} setLoading={setLoading} setChat={setChat} />
+          : <Remark key={`resp-${index}`} remark={{user: 0, message: log.response}}/>
+        }
+        {
+          log.verification === undefined 
+          ?<p onClick={() => handleVerificationClick(log.id,log.message)}>検証する</p>
+          : log.verification.nodes?.map((node, i) => (
+              <React.Fragment key={i}>
+                <p>
+                  Node: {node}
+                </p>
+                <p>
+                  Correctness: {log.verification!.correctness ? log.verification!.correctness[i] : "Not available"}
+                </p>
+              </React.Fragment>
+            ))
+        }
+      </>
+    )}
+    <Suggestion setMessage = {setMessage}/>
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      if (loading) {
+          return;
       }
-      <Suggestion setMessage = {setMessage}/>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        if (loading) {
-            return;
-        }
 
-        const chat = {
-            message: message,
-            // must refine
-            id: "a",
-        }
+      const chat = {
+          message: message,
+          // must refine
+          id: "a",
+      }
 
-        setChatLog(prevChat => [...prevChat, chat]);
-        setMessage("")
-      }}>
-        <div className="editor rounded-lg  flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
-            <input
-                className="title rounded bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
-                spellCheck="false"
-                placeholder="Send a message"
-                type="text"
-                value={message}
-                onChange={(e) => {
-                    // console.log(e.currentTarget.value)
-                    setMessage(e.currentTarget.value)
-                }}
-            />
-            <div className="buttons flex mt-3">
-                <button type="submit" className={
-                  loading ? "bg-red-200" :
-                  "bg-green-400"}>
-                    Submit
-                </button>
-            </div>
+      setChatLog(prevChat => [...prevChat, chat]);
+      setMessage("")
+    }}>
+      <div className="editor rounded-lg  flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+        <input
+          className="title rounded bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
+          spellCheck="false"
+          placeholder="Send a message"
+          type="text"
+          value={message}
+          onChange={(e) => {
+              // console.log(e.currentTarget.value)
+              setMessage(e.currentTarget.value)
+          }}
+        />
+        <div className="buttons flex mt-3">
+            <button type="submit" className={
+              loading ? "bg-red-200" :
+              "bg-green-400"}>
+                Submit
+            </button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
+  </div>
   );
 }

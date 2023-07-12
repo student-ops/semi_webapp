@@ -1,19 +1,19 @@
 version: '3.8'
 
 services:
-  python_project:
-    image: lakky1/hakata_python_project
-    container_name: python_project
-    tty: true
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - DATA_PATH=${DATA_PATH}
-      - SITE_DATA_PATH=${SITE_DATA_PATH}
-      - INDEX_PATH=${INDEX_PATH}
-      - REDIS_PATH=redis:6379
-
-    ports:
-      - "4000:4000" 
+  python_backend:
+  build: .
+  image: lakky1/semi_webapp_backend:latest
+  container_name: python_project
+  tty: true
+  ports:
+    - 4000:4000
+  environment:
+    - OPENAI_API_KEY=${OPENAI_API_KEY}
+    - DATA_PATH=${DATA_PATH}
+    - SITE_DATA_PATH=${SITE_DATA_PATH}
+    - INDEX_PATH=${INDEX_PATH}
+    - IS_DOCKER=true
 
   frontend_project:
     build:

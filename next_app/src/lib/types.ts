@@ -3,7 +3,7 @@ export type Chatlog = {
     id:string,
     response?:string
     loading?:boolean,
-    vafify?:Verifycation
+    verification?:Verification
 }
 
 export type RemarkType = {
@@ -11,9 +11,8 @@ export type RemarkType = {
     user:number, //0 =ai ,1 = user
 }
 
-export type Verifycation = {
+export type Verification = {
     nodes?:string[],
     verifing?:boolean,
-    correctness?:boolean[],
-    id?:string
+    correctness?:string[],
 }

@@ -6,7 +6,7 @@ function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoadi
   const dataRef = useRef('');
   const [_, setRender] = useState(0); // we only use this state to trigger re-renders
   let url = '/api/mock/streaming'
-  let uuid = ""
+  let uuid :string
 
   useEffect(() => {
     const fetchData = async () => {
