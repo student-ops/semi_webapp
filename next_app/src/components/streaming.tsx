@@ -7,7 +7,7 @@ function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoadi
   const [_, setRender] = useState(0); // we only use this state to trigger re-renders
   let url = '/api/mock/streaming'
   if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
-    url = process.env.NEXT_PUBLIC_BACKEND_URL + '/llama_chat'
+    url = process.env.NEXT_PUBLIC_BACKEND_URL 
   }
   let uuid :string
 
@@ -15,7 +15,7 @@ function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoadi
     const fetchData = async () => {
       setLoading(true);
 
-      const response = await fetch(url, {
+      const response = await fetch(url + '/llama_chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

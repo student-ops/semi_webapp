@@ -77,7 +77,7 @@ export default function Home() {
           },
           body: JSON.stringify({
             //must change id
-              "id": "8da4d957-d9e4-48f1-a2ff-ad717314f43a",
+              "id": id,
           }),
       });
 
@@ -99,7 +99,7 @@ export default function Home() {
 
   } 
 
-  const GetCorrectness = async (id: string,queyr:string) => {
+  const GetCorrectness = async (id: string,query:string) => {
       try {
           const response = await fetch(backend_url+'/llama_evaluate', {
               method: 'POST',
@@ -108,8 +108,8 @@ export default function Home() {
               },
               body: JSON.stringify({
               //must change id
-                  "id": "8da4d957-d9e4-48f1-a2ff-ad717314f43a",
-                  "query":"どのような人材を目指していますか 日本語で回答して"
+                  "id": id,
+                  "query":query
               }),
           });
 
