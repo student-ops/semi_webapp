@@ -5,8 +5,13 @@ import Remark from '@/components/remark';
 import React from 'react';
 import Suggestion from '@/components/chat_suggestion';
 
+require('dotenv').config()
 export default function Home() {
-  const backend_url = "http://localhost:4000"
+  let backend_url = "http://localhost:4000"
+  if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
+    backend_url = process.env.NEXT_PUBLIC_BACKEND_URL
+  }
+  console.log(backend_url)
   let initialchatLog: Chatlog[] = [
     {
       message : "どのような学部ですか",

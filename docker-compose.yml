@@ -16,7 +16,6 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DATA_PATH=${DATA_PATH}
-      - SITE_DATA_PATH=${SITE_DATA_PATH}
       - INDEX_PATH=${INDEX_PATH}
       - IS_DOCKER=true
 
@@ -26,5 +25,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      -

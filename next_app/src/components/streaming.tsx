@@ -6,6 +6,9 @@ function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoadi
   const dataRef = useRef('');
   const [_, setRender] = useState(0); // we only use this state to trigger re-renders
   let url = '/api/mock/streaming'
+  if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
+    url = process.env.NEXT_PUBLIC_BACKEND_URL + '/llama_chat'
+  }
   let uuid :string
 
   useEffect(() => {
