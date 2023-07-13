@@ -16,7 +16,7 @@ export default function Home() {
     {
       message : "どのような学部ですか",
       response:"ITについて学びます",
-      id:"1",
+      id:"sample1",
     },
     {
       message : "もう少し具体的に教えて",
