@@ -11,7 +11,7 @@ export default function Home() {
   if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
     backend_url = process.env.NEXT_PUBLIC_BACKEND_URL
   }
-  console.log(backend_url)
+  // console.log(backend_url)
   let initialchatLog: Chatlog[] = [
     {
       message : "どのような学部ですか",

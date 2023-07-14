@@ -9,6 +9,7 @@ function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoadi
   if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
     url = process.env.NEXT_PUBLIC_BACKEND_URL 
   }
+  console.log("on streaming "+url)
   let uuid :string
 
   useEffect(() => {
