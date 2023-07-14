@@ -12,3 +12,7 @@ export const PromptSuggestions :string[]= [
     "偏差値は",
     "どのような学科がありますか"
 ]
+
+export const PromptSuggestionsSemiReserch :string[]= [
+
+]
