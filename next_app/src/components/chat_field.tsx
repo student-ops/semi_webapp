@@ -127,12 +127,12 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
   return (
     <div h-full>
     <div className='w-full h-full'>
-      <div className='max-h-screen h-5/6'>
+      <div className='max-h-screen h-2/3 overflow-auto'>
       {chatLog.map((log, index) => 
         <div className={log.verification === undefined ?'flex w-full' :'flex flex-row-reverse my-4'}>
           <div className={log.verification === undefined ?'flex justify-center w-full' :'w-1/3 flex items-center' }>
             {log.verification === undefined && log.id !=="0" ?<p onClick={() => handleVerificationClick(log.id,log.message)} className='my-auto'>検証する</p> :<></>}
-            <div className={log.verification ===undefined ?'flex flex-col w-1/2 items-center':'w-full'}>
+            <div className={log.verification ===undefined ?'flex flex-col w-4/5 items-center':'w-full'}>
               <Remark key={index} remark={{message: log.message, user: 1}}/>
               {log.response === undefined 
                 ? <StreamResponse key={`resp-${index}`} chat={log} setLoading={setLoading} setChat={setChat} />
@@ -169,7 +169,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
         </div>
       )}
     </div >
-    <div className='flex flex-col'>
+    <div className='flex flex-col fixed bottom-0 w-full mb-4'>
     <Suggestion setMessage = {setMessage}/>
     <form onSubmit={(e) => {
       e.preventDefault();

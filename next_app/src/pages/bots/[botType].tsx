@@ -42,7 +42,6 @@ export default function Home() {
                 </button>
             ))}
             </div>
-            <p className="text-lg">{currentBot === 'faculty' ? '学科' : '研究室'}</p>
             {currentBot === 'faculty' && <ChatField chatLog={chatLogFaculty} setChatLog={setChatLogFaculty}/>}
             {currentBot === 'research' && <ChatField chatLog={chatLogResearch} setChatLog={setChatLogResearch}/>}
             </div>
