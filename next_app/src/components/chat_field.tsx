@@ -182,7 +182,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog,PromptSuggest
     <Suggestion setMessage = {setMessage} PromptSuggestions={PromptSuggestions}/>
     <form onSubmit={(e) => {
       e.preventDefault();
-      if (loading) {
+      if (loading || message === "") {
           return;
       }
 
