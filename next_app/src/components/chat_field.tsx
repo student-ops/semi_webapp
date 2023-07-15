@@ -7,10 +7,11 @@ import Suggestion from '@/components/chat_suggestion';
 interface ChatFieldProps {
     chatLog: Chatlog[];
     setChatLog: React.Dispatch<React.SetStateAction<Chatlog[]>>;
+    PromptSuggestions:string[];
 }
 
 require('dotenv').config()
-const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
+const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog,PromptSuggestions }) => {
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
@@ -138,7 +139,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
       {chatLog.map((log, index) => 
         <div className={log.verification === undefined ?'flex w-full' :'flex flex-row-reverse my-4'}>
           <div className={log.verification === undefined ?'flex justify-center w-full' :'w-1/3 flex items-center' }>
-            {log.verification === undefined && log.id !=="0" ?<p onClick={() => handleVerificationClick(log.id,log.message)} className='my-auto'>検証する</p> :<></>}
+            {log.verification === undefined && log.id !=="0" ?<p onClick={() => handleVerificationClick(log.id,log.message)} className='my-auto px-3 py-2 font-bold rounded-xl shadow-xl bg-gray-500 text-white hover:bg-gray-700'>検証する</p> :<></>}
             <div className={log.verification ===undefined ?'flex flex-col w-4/5 items-center':'w-full'}>
               <Remark key={index} remark={{message: log.message, user: 1}}/>
               {log.response === undefined 
@@ -177,8 +178,8 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
       )}
       <div ref={messagesEndRef} />
     </div >
-    <div className='mb-4 absolute bottom-0 w-full'>
-    <Suggestion setMessage = {setMessage}/>
+    <div className='mb-2 absolute bottom-0 w-full'>
+    <Suggestion setMessage = {setMessage} PromptSuggestions={PromptSuggestions}/>
     <form onSubmit={(e) => {
       e.preventDefault();
       if (loading) {
@@ -196,7 +197,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
     }}
     className='w-11/12 mx-auto'
     >
-      <div className="editor rounded-lg flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl bg-white">
+      <div className="editor rounded-lg flex flex-col text-gray-800 border border-gray-300 p-3 shadow-lg max-w-2xl bg-white">
       <div className="flex items-center justify-between">
         <input
             className="title rounded bg-gray-100 border border-gray-300 p-2 outline-none flex-grow"

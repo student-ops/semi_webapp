@@ -2,6 +2,7 @@ import ChatField from '@/components/chat_field'
 import { Chatlog } from '@/lib/types';
 import Image from 'next/image'
 import { useState } from 'react'
+import {PromptSuggestionsReserch,PromptSuggestionsFaculty} from '@/lib/suggestions'
 
 export default function Home() {
     const initialChatlogfaculty: Chatlog = {
@@ -43,8 +44,8 @@ export default function Home() {
                 ))}
             </div>
             <div className='h-5/6'>
-            {currentBot === 'faculty' && <ChatField chatLog={chatLogFaculty} setChatLog={setChatLogFaculty}/>}
-            {currentBot === 'research' && <ChatField chatLog={chatLogResearch} setChatLog={setChatLogResearch}/>}
+            {currentBot === 'faculty' && <ChatField chatLog={chatLogFaculty} setChatLog={setChatLogFaculty} PromptSuggestions={PromptSuggestionsFaculty}/>}
+            {currentBot === 'research' && <ChatField chatLog={chatLogResearch} setChatLog={setChatLogResearch} PromptSuggestions={PromptSuggestionsReserch}/>}
             </div>
             </div>
         </div>

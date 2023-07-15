@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { PromptSuggestions } from "@/lib/suggestions";
 import { useSwipeable } from 'react-swipeable';
 
 
-const Suggestion: React.FC<{ setMessage: (message: string) => void }> = ({ setMessage }) => {
+const Suggestion: React.FC<{ setMessage: (message: string) => void,PromptSuggestions :string[]}> = ({ setMessage,PromptSuggestions}) => {
     const [suggestions, setSuggestions] = useState<string[][]>([]);
     const [page,setPage] = useState(0);
 
