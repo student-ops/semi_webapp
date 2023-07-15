@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis
+
+  python_project:
+    build: .
+    container_name: python_project
+    tty: true
+    ports:
+      - 4000:4000
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATA_PATH=${DATA_PATH}
+      - INDEX_PATH=${INDEX_PATH}
+      - REDIS_PATH=redis:6379
+      - IS_DOCKER=true
+
