@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - 6379:6379
+      
+  python_backend:
+    image: lakky1/semi_webapp_backend:latest
+    container_name: python-project
+    tty: true
+    ports:
+      - 4000:4000
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATA_PATH=${DATA_PATH}
+      - INDEX_PATH=${INDEX_PATH}
+      - IS_DOCKER=true
+
+  frontend_project:
+    build:
+      context: ./next_app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
