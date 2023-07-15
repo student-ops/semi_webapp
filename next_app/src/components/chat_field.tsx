@@ -125,14 +125,13 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
   const verification_class = "my-4 rounded-lg shadow-md "
 
   return (
-    <div>
-      <h1>Sample</h1>
-      <h1>Streaming Data Display</h1>
-    <div className='w-full'>
+    <div h-full>
+    <div className='w-full h-full'>
+      <div className='max-h-screen h-5/6'>
       {chatLog.map((log, index) => 
         <div className={log.verification === undefined ?'flex w-full' :'flex flex-row-reverse my-4'}>
           <div className={log.verification === undefined ?'flex justify-center w-full' :'w-1/3 flex items-center' }>
-            {log.verification === undefined ?<p onClick={() => handleVerificationClick(log.id,log.message)} className='my-auto'>検証する</p> :<></>}
+            {log.verification === undefined && log.id !=="0" ?<p onClick={() => handleVerificationClick(log.id,log.message)} className='my-auto'>検証する</p> :<></>}
             <div className={log.verification ===undefined ?'flex flex-col w-1/2 items-center':'w-full'}>
               <Remark key={index} remark={{message: log.message, user: 1}}/>
               {log.response === undefined 
@@ -169,7 +168,8 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
           }
         </div>
       )}
-    </div>
+    </div >
+    <div className='flex flex-col'>
     <Suggestion setMessage = {setMessage}/>
     <form onSubmit={(e) => {
       e.preventDefault();
@@ -185,28 +185,33 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
 
       setChatLog(prevChat => [...prevChat, chat]);
       setMessage("")
-    }}>
-      <div className="editor rounded-lg  flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+    }}
+    className='w-11/12 mx-auto'
+    >
+      <div className="editor rounded-lg flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl bg-white">
+      <div className="flex items-center justify-between">
         <input
-          className="title rounded bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
-          spellCheck="false"
-          placeholder="Send a message"
-          type="text"
-          value={message}
-          onChange={(e) => {
-              // console.log(e.currentTarget.value)
-              setMessage(e.currentTarget.value)
-          }}
+            className="title rounded bg-gray-100 border border-gray-300 p-2 outline-none flex-grow"
+            spellCheck="false"
+            placeholder="Send a message"
+            type="text"
+            value={message}
+            onChange={(e) => {
+                // console.log(e.currentTarget.value)
+                setMessage(e.currentTarget.value)
+            }}
         />
-        <div className="buttons flex mt-3">
-            <button type="submit" className={
-              loading ? "bg-red-200" :
-              "bg-green-400"}>
-                Submit
-            </button>
-        </div>
+        <button type="submit" className={`ml-2 p-2 rounded-lg ${loading ? "bg-red-200" : "bg-emerald-400"}`}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M1.923 1.066a1 1 0 0 1 1.32-.08l16.2 9.368a1.5 1.5 0 0 1 0 2.52l-16.2 9.367a1 1 0 0 1-1.439-1.32L3.8 11.799 1.116 2.386A1 1 0 0 1 1.923 1.066z"/>
+          </svg>
+        </button>
+      </div>
       </div>
     </form>
+    </div>
+  </div>
   </div>
   );
 }
