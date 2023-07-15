@@ -11,7 +11,14 @@ interface ChatFieldProps {
 
 require('dotenv').config()
 const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
-    let backend_url = "http://localhost:4000"
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatLog]);
+  let backend_url = "http://localhost:4000"
   // if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
   //   backend_url = process.env.NEXT_PUBLIC_BACKEND_URL
   // }
@@ -41,6 +48,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
   // }, [chatLog]); 
 
   const handleVerificationClick = async (id: string,query:string) => {
+    
     console.log("Verification clicked for id:", id);
     // Fetch data and handle response
     const correctness = await GetCorrectness(id,query);
@@ -167,6 +175,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
           }
         </div>
       )}
+      <div ref={messagesEndRef} />
     </div >
     <div className='mb-4 absolute bottom-0 w-full'>
     <Suggestion setMessage = {setMessage}/>
