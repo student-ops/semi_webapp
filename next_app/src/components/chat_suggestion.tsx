@@ -18,7 +18,7 @@ const Suggestion: React.FC<{ setMessage: (message: string) => void,PromptSuggest
             chunks.push(PromptSuggestions.slice(i, i + 3));
         }
         setSuggestions(chunks);
-    }, []);
+    }, [PromptSuggestions]);
 
     const nextPage = () => {
         if (page < suggestions.length - 1) {
@@ -36,7 +36,6 @@ const Suggestion: React.FC<{ setMessage: (message: string) => void,PromptSuggest
         <div className="w-full flex justify-center " {...handlers}>
             
             <div className="flex items-center justify-center">
-                { page > 0 && <p onClick={prevPage}>&lt;</p>}
                 <div className="flex-col">
                     <div className="flex justify-center">
                         {suggestions.map((_,index) =>
@@ -53,7 +52,6 @@ const Suggestion: React.FC<{ setMessage: (message: string) => void,PromptSuggest
                         key={index} className="mb-2">{suggestion}</p>
                 )}
                 </div>
-                {page < suggestions.length -1 &&<p onClick={nextPage}>&gt;</p>}
             </div>
         </div>
     )

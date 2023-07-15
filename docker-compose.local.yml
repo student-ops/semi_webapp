@@ -19,9 +19,11 @@ services:
       - INDEX_PATH=${INDEX_PATH}
       - IS_DOCKER=true
 
-  frontend_project:
-    build:
+  frontend-project:
+    build: 
       context: ./next_app
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "80:3000"
+    volumes:
+      - ./build:/usr/share/nginx/html

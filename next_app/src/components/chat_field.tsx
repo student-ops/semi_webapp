@@ -20,10 +20,10 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog,PromptSuggest
     }
   }, [chatLog]);
   let backend_url = "http://localhost:4000"
-  // if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
-  //   backend_url = process.env.NEXT_PUBLIC_BACKEND_URL
-  // }
-  // console.log(backend_url)
+  if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
+    backend_url = process.env.NEXT_PUBLIC_BACKEND_URL
+  }
+  console.log(backend_url)
 
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
@@ -137,9 +137,9 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog,PromptSuggest
 <div className='flex flex-col h-full'>
       <div className='flex-grow max-h-[50vh] overflow-auto'>
       {chatLog.map((log, index) => 
-        <div className={log.verification === undefined ?'flex w-full' :'flex flex-row-reverse my-4'}>
-          <div className={log.verification === undefined ?'flex justify-center w-full' :'w-1/3 flex items-center' }>
-            {log.verification === undefined && log.id !=="0" ?<p onClick={() => handleVerificationClick(log.id,log.message)} className='my-auto px-3 py-2 font-bold rounded-xl shadow-xl bg-gray-500 text-white hover:bg-gray-700'>検証する</p> :<></>}
+        <div key ={`chat-root${index}`}className={log.verification === undefined ?'flex w-full' :'flex flex-col my-4'}>
+          <div className={log.verification === undefined ?'flex justify-center w-full' :'w-full flex ' }>
+            {log.verification === undefined && log.id !=="0" && !loading ?<p onClick={() => handleVerificationClick(log.id,log.message)} className='my-auto px-3 py-2 font-bold rounded-xl shadow-xl bg-gray-500 text-white hover:bg-gray-700'>検証する</p> :<></>}
             <div className={log.verification ===undefined ?'flex flex-col w-4/5 items-center':'w-full'}>
               <Remark key={index} remark={{message: log.message, user: 1}}/>
               {log.response === undefined 
@@ -152,13 +152,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog,PromptSuggest
             log.verification === undefined 
             ? <></>
             : (
-              <div className='w-2/3'>
-                {log.verification?.correctness && 
-                  <p>
-                    Correctness Ratio: 
-                    {`${log.verification.correctness.filter(c => c === 'YES').length} / ${log.verification.correctness.length}`}
-                  </p>
-                }
+              <div className='w-4/5'>
                 {log.verification.nodes?.map((node, i) => (
                   <React.Fragment key={i}>
                     <div className={`${verification_class} ${log.verification!.correctness![i] === 'YES'? "bg-green-300":"bg-red-300"}`}>
@@ -171,6 +165,12 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog,PromptSuggest
                     </div>
                   </React.Fragment>
                 ))}
+                  {log.verification?.correctness && 
+                    <p>
+                      正確性の検証結果 : 
+                      {`${log.verification.correctness.filter(c => c === 'YES').length} / ${log.verification.correctness.length}`}
+                    </p>
+                  }
               </div>
             )
           }

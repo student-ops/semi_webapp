@@ -11,7 +11,7 @@ function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoadi
     url += '/llama_chat'
   }
   console.log("on streaming "+url)
-  let uuid :string
+  const uuidRef = useRef<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,20 +39,24 @@ function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoadi
 
           if (done) {
             setLoading(false);
-            let newchat = {
-              message: chat.message,
-              response: dataRef.current,
-              id: uuid,
+            if (uuidRef.current === null) {
+            } else {
+              let newchat = {
+                message: chat.message,
+                response: dataRef.current,
+                id: uuidRef.current,
+              }
+              setChat(newchat);
             }
-            setChat(newchat);
             break;
           }
+          
 
           const chunk = decoder.decode(value);
           if (isFirstChunk && chunk.startsWith('id:')) {
             const [id, ...rest] = chunk.split('\n');
             const idValue = id.split(':')[1];
-            uuid = idValue;
+            uuidRef.current= idValue;
             isFirstChunk = false;
           } else {
             dataRef.current += chunk;
