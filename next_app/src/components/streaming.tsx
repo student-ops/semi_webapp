@@ -1,11 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import Remark from './remark';
 import { Chatlog, RemarkType } from '@/lib/types';
-import { useRouter } from 'next/router';
 
 function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoading: (loading: boolean) => void; setChat: (chatlog: Chatlog) => void }) {
-  const router = useRouter();
-  const botType = router.query.botType; 
   const dataRef = useRef('');
   const [_, setRender] = useState(0); // we only use this state to trigger re-renders
   let url = '/api/mock/streaming'
