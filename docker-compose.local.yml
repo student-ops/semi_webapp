@@ -8,8 +8,10 @@ services:
       - 6379:6379
       
   python_backend:
-    image: lakky1/semi_webapp_backend:latest
     container_name: python-project
+    build: 
+      context: ./python_app
+      dockerfile: Dockerfile
     tty: true
     ports:
       - 4000:4000
