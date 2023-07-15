@@ -1,8 +1,8 @@
 import ChatField from '@/components/chat_field'
 import { Chatlog } from '@/lib/types';
-import Image from 'next/image'
-import { useState } from 'react'
-import {PromptSuggestionsReserch,PromptSuggestionsFaculty} from '@/lib/suggestions'
+import Image from 'next/image';
+import { useState } from 'react';
+import {PromptSuggestionsReserch,PromptSuggestionsFaculty} from '@/lib/suggestions';
 
 export default function Home() {
     const initialChatlogfaculty: Chatlog = {
