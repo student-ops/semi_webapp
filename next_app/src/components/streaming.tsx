@@ -1,13 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
 import Remark from './remark';
 import { Chatlog, RemarkType } from '@/lib/types';
+import { useRouter } from 'next/router';
 
 function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoading: (loading: boolean) => void; setChat: (chatlog: Chatlog) => void }) {
+  const router = useRouter();
+  const botType = router.query.botType; 
   const dataRef = useRef('');
   const [_, setRender] = useState(0); // we only use this state to trigger re-renders
   let url = '/api/mock/streaming'
   if(process.env.NEXT_PUBLIC_BACKEND_URL !== undefined){
     url = process.env.NEXT_PUBLIC_BACKEND_URL 
+    url += '/llama_chat'
   }
   console.log("on streaming "+url)
   let uuid :string
@@ -16,7 +20,7 @@ function StreamResponse({ chat, setLoading, setChat }: { chat: Chatlog; setLoadi
     const fetchData = async () => {
       setLoading(true);
 
-      const response = await fetch(url + '/llama_chat', {
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

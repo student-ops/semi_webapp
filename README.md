@@ -14,3 +14,10 @@ https://github.com/student-ops/semi_webapp_backend
 ヘッダーデザイン
 
 codespace＆local動作確認///
+
+
+
+
+```
+http://localhost:3000/bots/faculty
+```
