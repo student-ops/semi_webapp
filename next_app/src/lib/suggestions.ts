@@ -16,5 +16,5 @@ export const PromptSuggestionsFaculty :string[]= [
 ]
 
 export const PromptSuggestionsReserch :string[]= [
-    "Iotとは",
+    "IoTとは",
 ]
