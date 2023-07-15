@@ -7,9 +7,11 @@ services:
     ports:
       - 6379:6379
       
-  python-backend:
-    image:  maincompose.azurecr.io/semi_webapp_backend:latest
+  python_backend:
     container_name: python-project
+    build: 
+      context: ./python_app
+      dockerfile: Dockerfile
     tty: true
     ports:
       - 4000:4000
@@ -20,6 +22,10 @@ services:
       - IS_DOCKER=true
 
   frontend-project:
-    image: maincompose.azurecr.io/frontend_project:latest
+    build: 
+      context: ./next_app
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "80:3000"
+    volumes:
+      - ./build:/usr/share/nginx/html

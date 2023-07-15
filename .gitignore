@@ -1,2 +1,5 @@
 .env
 .venv
+start.sh
+start.local.sh
+next_app/out

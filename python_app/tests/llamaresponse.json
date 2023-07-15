@@ -1,0 +1,39 @@
+{
+	"docstore/metadata": {
+		"ceaf27bf-542c-485e-ad00-37aed1bdcab4": {
+			"doc_hash": "93059a6af8d7cb9686cb67dbd84bbe5bf3a8e40cf0c53f77a94268491877c447"
+		},
+		"b2e7bb1a-2d17-41a8-924a-872f27a85061": {
+			"doc_hash": "93059a6af8d7cb9686cb67dbd84bbe5bf3a8e40cf0c53f77a94268491877c447",
+			"ref_doc_id": "ceaf27bf-542c-485e-ad00-37aed1bdcab4"
+		}
+	},
+	"docstore/data": {
+		"b2e7bb1a-2d17-41a8-924a-872f27a85061": {
+			"__data__": {
+				"text": "情報システム学部\nFaculty of Information System\n- シーボルト校 -\n情報システムに関する知識と実践力を身に付け、\n高度情報社会における課題を解決できる人材を目指す。\n情報システム学部は「情報システム学科」「情報セキュリティ学科」の2学科で構成されています。loT・AI・情報デザイン・情報セキュリティ・生体認証の研究および、地域密着の分野である観光や環境・防災・農業にまつわる情報システムの研究を通じ、情報システムに関する知識と実践力を身につけ、高度情報社会における課題を解決できる人材を育成しています。\n",
+				"doc_id": "b2e7bb1a-2d17-41a8-924a-872f27a85061",
+				"embedding": null,
+				"doc_hash": "93059a6af8d7cb9686cb67dbd84bbe5bf3a8e40cf0c53f77a94268491877c447",
+				"extra_info": null,
+				"node_info": {
+					"start": 0,
+					"end": 269,
+					"_node_type": "1"
+				},
+				"relationships": {
+					"1": "ceaf27bf-542c-485e-ad00-37aed1bdcab4"
+				}
+			},
+			"__type__": "1"
+		}
+	},
+	"docstore/ref_doc_info": {
+		"ceaf27bf-542c-485e-ad00-37aed1bdcab4": {
+			"doc_ids": [
+				"b2e7bb1a-2d17-41a8-924a-872f27a85061"
+			],
+			"extra_info": {}
+		}
+	}
+}
