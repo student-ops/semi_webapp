@@ -1,5 +1,5 @@
 import StreamResponse from '@/components/streaming';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useRef } from 'react';
 import { Chatlog, Verification , RemarkType } from '@/lib/types';
 import Remark from '@/components/remark';
 import React from 'react';
@@ -125,9 +125,8 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
   const verification_class = "my-4 rounded-lg shadow-md "
 
   return (
-    <div h-full>
-    <div className='w-full h-full'>
-      <div className='max-h-screen h-2/3 overflow-auto'>
+<div className='flex flex-col h-full'>
+      <div className='flex-grow max-h-[50vh] overflow-auto'>
       {chatLog.map((log, index) => 
         <div className={log.verification === undefined ?'flex w-full' :'flex flex-row-reverse my-4'}>
           <div className={log.verification === undefined ?'flex justify-center w-full' :'w-1/3 flex items-center' }>
@@ -169,7 +168,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
         </div>
       )}
     </div >
-    <div className='flex flex-col fixed bottom-0 w-full mb-4'>
+    <div className='mb-4 absolute bottom-0 w-full'>
     <Suggestion setMessage = {setMessage}/>
     <form onSubmit={(e) => {
       e.preventDefault();
@@ -211,7 +210,6 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatLog, setChatLog }) => {
       </div>
     </form>
     </div>
-  </div>
   </div>
   );
 }
