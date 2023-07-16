@@ -1,5 +1,6 @@
 version: '3.8'
 
+services:
   frontend-project:
     build: 
       context: ./next_app
