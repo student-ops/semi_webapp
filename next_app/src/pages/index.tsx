@@ -8,12 +8,12 @@ export default function Home() {
     const initialChatlogfaculty: Chatlog = {
         id:"0",
         message:"こんにちは",
-        response:"こんにちは！学科について聞きたいことがあれば聞いてください！",
+        response:"こんにちは！学科について聞きたいことがあれば\nチャットに入力してください！",
     }
     const initialChatlogreserch: Chatlog = {
         id:"0",
         message:"こんにちは",
-        response:"こんにちは！視覚メディア研究室について聞きたいことがあれば聞いてください！",
+        response:"こんにちは！視覚メディア研究室について聞きたいことがあれば\nチャットに入力してください！",
     }
     const [chatLogFaculty, setChatLogFaculty] = useState<Chatlog[]>([initialChatlogfaculty]);
     const [chatLogResearch, setChatLogResearch] = useState<Chatlog[]>([initialChatlogreserch]);
